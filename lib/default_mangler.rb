@@ -292,7 +292,10 @@ module ECMangle
 
     def canonicalize(ec)
       # default order is:
-      t_order = %w[year month start_month end_month volume part number start_number end_number book sheet start_page end_page supplement]
+      t_order = %w[year month start_month end_month 
+                  volume part 
+                  number start_number end_number
+                  book sheet start_page end_page supplement]
       canon = t_order.reject { |t| ec[t].nil? }
                      .collect { |t| t.to_s.tr('_', ' ').capitalize + ':' + ec[t] }
                      .join(', ')
@@ -315,5 +318,5 @@ module ECMangle
       end
       enum_chrons
     end
-    end
+  end
 end

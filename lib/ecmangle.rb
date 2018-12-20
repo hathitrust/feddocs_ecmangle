@@ -165,21 +165,4 @@ module ECMangle
     ECMangle.default_ec_handler = ECMangle::DefaultMangler.new
   end
   get_available_ec_handlers
-  #     # Uses ocns and sudocs to identify a series title
-  #     # (and appropriate ultimately handler)
-  #     def series
-  #       @series ||= []
-  #       ECMangle.available_ec_handlers.each do |_k, handler|
-  #         if (record_ocns.map(&:to_i) &
-  #             handler.ocns).any? ||
-  #            (defined?(handler.sudoc_stems) &&
-  #              record_sudocs.grep(%r{^#{::Regexp
-  #                         .escape(handler.sudoc_stems.first)}}).any?
-  #            )
-  #           @series << handler.title
-  #         end
-  #       end
-  #       @series.uniq!
-  #       @series
-  #     end
 end
