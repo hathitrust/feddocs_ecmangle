@@ -6,8 +6,6 @@ require 'pp'
 
 class DummyClass < OpenStruct
   include ECMangle
-  attr_accessor :oclc_resolved
-  attr_accessor :sudocs
 end
 
 describe 'ECMangle.calc_end_year' do
@@ -109,6 +107,9 @@ describe 'ec_handler' do
     rec = DummyClass.new(ocns: [14_964_165], sudocs: [])
     expect(rec.series).to eq(['FCC Record'])
     expect(rec.ec_handler.title).to eq('FCC Record')
+    rec2 = DummyClass.new(ocns: [], sudocs:['S 1.1:foobar'])
+    expect(rec2.series).to eq(['Foreign Relations'])
+    expect(rec2.ec_handler.title).to eq('Foreign Relations')
   end
 end
 
