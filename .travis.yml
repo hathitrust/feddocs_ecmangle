@@ -1,0 +1,8 @@
+language: ruby
+rvm: 
+  - 2.4
+before_script:
+  - sleep 10
+script: bundle exec rspec
+  
+

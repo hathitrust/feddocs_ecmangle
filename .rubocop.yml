@@ -1,0 +1,8 @@
+Style/NumericPredicate:
+  AutoCorrect: true
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+
+Style/RegexpLiteral:
+  EnforcedStyle: mixed
