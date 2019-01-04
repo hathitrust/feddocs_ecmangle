@@ -93,7 +93,7 @@ end
 
 describe 'ec_handler' do
   it 'does something' do
-    expect(ECMangle.available_ec_handlers.count).to eq(28)
+    expect(ECMangle.available_ec_handlers.count).to eq(29)
     expect(ECMangle.default_ec_handler.title).to eq('Default Mangler')
     expect(DummyClass.new.ec_handler.title).to eq('Default Mangler')
   end
@@ -107,7 +107,7 @@ describe 'ec_handler' do
     rec = DummyClass.new(ocns: [14_964_165], sudocs: [])
     expect(rec.series).to eq(['FCC Record'])
     expect(rec.ec_handler.title).to eq('FCC Record')
-    rec2 = DummyClass.new(ocns: [], sudocs:['S 1.1:foobar'])
+    rec2 = DummyClass.new(ocns: [], sudocs: ['S 1.1:foobar'])
     expect(rec2.series).to eq(['Foreign Relations'])
     expect(rec2.ec_handler.title).to eq('Foreign Relations')
   end
@@ -281,7 +281,7 @@ end
 describe 'ECMangle.available_ec_handlers' do
   it 'contains all of the ec_handlers' do
     ECMangle.available_ec_handlers.each { |_t, h| puts h.title }
-    expect(ECMangle.available_ec_handlers.count).to eq(28)
+    expect(ECMangle.available_ec_handlers.count).to eq(29)
   end
 end
 

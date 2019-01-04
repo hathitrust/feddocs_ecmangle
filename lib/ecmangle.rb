@@ -144,7 +144,7 @@ module ECMangle
     end
     record_sudocs.each do |sudoc|
       ECMangle.sudoc_handlers.each do |stem, handlers|
-        if sudoc =~ /^#{::Regexp.escape(stem)}/
+        if /^#{::Regexp.escape(stem)}/.match?(sudoc)
           @series << handlers.collect(&:title)
         end
       end
