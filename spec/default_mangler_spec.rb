@@ -1,7 +1,55 @@
 # frozen_string_literal: true
 
 require 'ecmangle'
+require 'yaml'
+
 DM = ECMangle::DefaultMangler
+require 'custom_manglers/agricultural_statistics'
+AS = ECMangle::AgriculturalStatistics
+
+describe 'initialize' do
+  let(:bulletin) do
+    DM.new(YAML.load_file(
+             File.dirname(__FILE__) +
+              '/custom_manglers/dummy_config.yml'
+           ))
+  end
+
+  it 'takes title from parsed YAML' do
+    expect(DM.new.title).to eq('Default Mangler')
+    expect(bulletin.title).to eq('Bulletin of the United States Bureau of Labor Statistics')
+  end
+
+  it 'takes ocns from parsed YAML' do
+    expect(bulletin.ocns).to eq([1_714_756, 604_255_105])
+  end
+
+  it 'takes sudoc stems from parsed YAML' do
+    expect(bulletin.sudoc_stems).to eq([])
+  end
+
+  it 'doesn\'t overwrite tokens' do
+    expect(bulletin.tokens).to include(:n)
+  end
+
+  it 'takes new tokens from YAML' do
+    expect(bulletin.tokens.keys).to include(:dummy_token)
+    # but doesn't mess up future handlers
+    expect(DM.new.tokens.keys).not_to include(:dummy_token)
+    # or other handlers
+    expect(AS.new.tokens.keys).not_to include(:dummy_token)
+  end
+
+  it 'takes new patterns from YAML' do
+    expect(bulletin.patterns).to include(/plain text/)
+    expect(bulletin.patterns).to include(/^#{bulletin.tokens[:y]}$/ix)
+  end
+
+  it 'takes patterns with references to tokens' do
+    expect(bulletin.patterns).to include(/^not\s#{bulletin.tokens[:y]}$/ix)
+    expect(bulletin.patterns).to include(/^not\sdummy$/)
+  end
+end
 
 describe 'tokens' do
   it 'matches "OCT."' do

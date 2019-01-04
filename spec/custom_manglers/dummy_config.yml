@@ -1,0 +1,9 @@
+title: Bulletin of the United States Bureau of Labor Statistics
+ocns: [1714756,604255105] 
+tokens: 
+  :dummy_token: 'dummy'
+  :more_stupid: 'stupid'
+patterns:
+  - /plain text/
+  - /^not\s#{@tokens[:y]}$/ix
+  - /^not\s#{@tokens[:dummy_token]}$/

@@ -7,11 +7,12 @@ module ECMangle
     attr_accessor :title
     attr_accessor :ocns
     attr_accessor :sudoc_stems
+    attr_accessor :t_order
 
-    def initialize
-      @title ||= 'Default Mangler'
-      @ocns ||= []
-      @sudoc_stems ||= []
+    def initialize(options = {})
+      @title ||= (options['title'] || 'Default Mangler')
+      @ocns ||= (options['ocns'] || [])
+      @sudoc_stems ||= (options['sudoc_stems'] || [])
       ECMangle.register_handler self
       @tokens = {
         # divider
@@ -52,6 +53,7 @@ module ECMangle
         pgs: 'P[PG]\.(\s|:)(?<start_page>\d{1,5})-(?<end_page>\d{1,5})'
 
       }
+      @tokens.merge!(options['tokens']) if options['tokens']
 
       @patterns = [
         /^#{@tokens[:v]}$/xi,
@@ -251,6 +253,9 @@ module ECMangle
           (?<end_day>\d{1,2})
         }xi
       ]
+      if options['patterns']
+        @patterns.concat(options['patterns'].map { |p| Regexp.new(eval(p)) })
+      end
     end
 
     def preprocess(ec_string)
@@ -292,10 +297,10 @@ module ECMangle
 
     def canonicalize(ec)
       # default order is:
-      t_order = %w[year month start_month end_month 
-                  volume part 
-                  number start_number end_number
-                  book sheet start_page end_page supplement]
+      t_order = @t_order || %w[year month start_month end_month
+                               volume part
+                               number start_number end_number
+                               book sheet start_page end_page supplement]
       canon = t_order.reject { |t| ec[t].nil? }
                      .collect { |t| t.to_s.tr('_', ' ').capitalize + ':' + ec[t] }
                      .join(', ')
