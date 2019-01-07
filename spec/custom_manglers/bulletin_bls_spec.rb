@@ -32,7 +32,7 @@ describe 'Bulletin' do
       puts "BLS Bulletin match: #{matches}"
       puts "BLS Bulletin no match: #{misses}"
       # actual number in test file is 7074
-      expect(matches).to eq(6532)
+      expect(matches).to eq(6534)
       # expect(matches).to eq(matches+misses)
     end
 
@@ -50,6 +50,11 @@ describe 'Bulletin' do
 
     it 'parses Number:1116, Volume:1' do
       expect(bulletin.parse_ec('Number:1116, Volume:1')['volume']).to eq('1')
+    end
+
+    it 'parses NO. 960-1 (1949)' do
+      expect(bulletin.parse_ec('NO. 960-1 (1949)')['part']).to eq('1')
+      expect(bulletin.parse_ec('NO. 960-1 1949')['part']).to eq('1')
     end
 
     it 'parses NO. 857' do
