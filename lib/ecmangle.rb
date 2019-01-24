@@ -11,7 +11,7 @@ module ECMangle
     attr_accessor :ocn_handlers # {<ocn> : [<handlers>]}
     attr_accessor :sudoc_handlers # {<sudoc> : [<handlers>]}
   end
-  def_delegators :ec_handler, :parse_ec, :explode
+  def_delegators :ec_handler, :parse_ec, :explode, :canonicalize
 
   @ocn_handlers = Hash.new { |hash, key| hash[key] = [] }
   @sudoc_handlers = Hash.new { |hash, key| hash[key] = [] }
@@ -106,16 +106,6 @@ module ECMangle
     match_hash
   end
   module_function :fix_months
-
-  def canonicalize(ec)
-    # default order is:
-    t_order = %w[year month start_month end_month volume part number start_number end_number book sheet start_page end_page supplement]
-    canon = t_order.reject { |t| ec[t].nil? }
-                   .collect { |t| t.to_s.tr('_', ' ').capitalize + ':' + ec[t] }
-                   .join(', ')
-    canon = nil if canon == ''
-    canon
-  end
 
   def load_context; end
 
