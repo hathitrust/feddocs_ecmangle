@@ -73,6 +73,10 @@ describe 'parse_ec' do
   it 'parses V. 2' do
     expect(DM.new.parse_ec('V. 2')['volume']).to eq('2')
   end
+
+  it 'parses V. 127(1954)' do
+    parsed = DM.new.parse_ec('V. 127(1954)')
+  end
 end
 
 describe 'register_handler' do
