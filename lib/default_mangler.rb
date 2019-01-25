@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module ECMangle
+  # Default mangler/handler of enumeration/chronology
+  # All custom manglers inherit from DefaultMangler.
   class DefaultMangler
     attr_accessor :patterns
     attr_accessor :tokens
@@ -258,6 +260,7 @@ module ECMangle
       end
     end
 
+    # Clean up and normalization
     def preprocess(ec_string)
       # fix 3 digit years, this is more restrictive than most series specific
       # work.
@@ -265,6 +268,7 @@ module ECMangle
       ec_string.sub(/^C\. [1-2] /, '').sub(/\(\s/, '(').sub(/\s\)/, ')')
     end
 
+    # Use the tokens and patterns to perform feature extraction
     def parse_ec(ec_string)
       matchdata = nil
 
@@ -298,6 +302,7 @@ module ECMangle
     def canonicalize(ec)
       # default order is:
       t_order = @t_order || %w[year month start_month end_month
+                               day start_day end_day
                                volume part
                                number start_number end_number
                                book sheet start_page end_page supplement]
