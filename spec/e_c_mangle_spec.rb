@@ -93,7 +93,6 @@ end
 
 describe 'ec_handler' do
   it 'does something' do
-    expect(ECMangle.available_ec_handlers.count).to eq(29)
     expect(ECMangle.default_ec_handler.title).to eq('Default Mangler')
     expect(DummyClass.new.ec_handler.title).to eq('Default Mangler')
   end
@@ -281,7 +280,7 @@ end
 describe 'ECMangle.available_ec_handlers' do
   it 'contains all of the ec_handlers' do
     ECMangle.available_ec_handlers.each { |_t, h| puts h.title }
-    expect(ECMangle.available_ec_handlers.count).to eq(29)
+    expect(ECMangle.available_ec_handlers.count).to eq(30)
   end
 end
 

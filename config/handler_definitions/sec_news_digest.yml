@@ -1,0 +1,6 @@
+title: SEC News Digest
+ocns: [2650712,8198194,40650268,426253974]
+patterns:
+  - /^ISSUE\s(NO\.\s)?\d{2,4}:(?<number>\d+)\s\((?<year>\d{4})\)$/
+  - /^NO\.\s\d{2,4}-(?<number>\d+)\s\((?<year>\d{4}):[A-Z]{3,4}\.?\s\d{1,2}\)$/
+  - /ISSUE\sNO\.\s\d\d:(?<month>\d{1,2}):(?<day>\d{1,2})\s\((?<year>\d{4})\)$/
