@@ -34,9 +34,9 @@ describe 'initialize' do
 
   it 'takes new tokens from YAML' do
     expect(bulletin.tokens.keys).to include(:dummy_token)
-    # but doesn't mess up future handlers
+    # but doesn't mess up future manglers
     expect(DM.new.tokens.keys).not_to include(:dummy_token)
-    # or other handlers
+    # or other manglers
     expect(AS.new.tokens.keys).not_to include(:dummy_token)
   end
 
@@ -79,9 +79,9 @@ describe 'parse_ec' do
   end
 end
 
-describe 'register_handler' do
-  it 'registers itself as the default handler' do
+describe 'register_mangler' do
+  it 'registers itself as the default mangler' do
     dsh = DM.new
-    expect(ECMangle.default_ec_handler).to be(dsh)
+    expect(ECMangle.default_ec_mangler).to be(dsh)
   end
 end

@@ -53,8 +53,8 @@ describe 'FCCRecord' do
 
   describe 'registers_self' do
     it 'registers itself with ECMangle' do
-      fccr_handler = FCCR.new
-      expect(ECMangle.ocn_handlers[25_705_333]).to include(fccr_handler)
+      fccr_mangler = FCCR.new
+      expect(ECMangle.ocn_manglers[25_705_333]).to include(fccr_mangler)
     end
   end
 

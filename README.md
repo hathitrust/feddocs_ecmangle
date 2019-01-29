@@ -1,7 +1,7 @@
 # Module for parsing/extracting/exploding enumeration/chronology
 Including the ECMangle module in a SourceRecord provides support for series title identification as well as enumeration/chronology parsing, expansion, and canonicalization. 
 
-Custom manglers can be defined with a YAML file in config/handler_definitions or with custom classes in lib/custom_manglers.
+Custom manglers can be defined with a YAML file in config/mangler_definitions or with custom classes in lib/custom_manglers.
 
 ## Config Defined Manglers
       - SEC News Digest

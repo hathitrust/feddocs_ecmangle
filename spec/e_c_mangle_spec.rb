@@ -91,31 +91,31 @@ describe 'fix_months' do
   end
 end
 
-describe 'ec_handler' do
+describe 'ec_mangler' do
   it 'does something' do
-    expect(ECMangle.default_ec_handler.title).to eq('Default Mangler')
-    expect(DummyClass.new.ec_handler.title).to eq('Default Mangler')
+    expect(ECMangle.default_ec_mangler.title).to eq('Default Mangler')
+    expect(DummyClass.new.ec_mangler.title).to eq('Default Mangler')
   end
 
-  it 'gives us default handler if no series matches' do
+  it 'gives us default mangler if no series matches' do
     rec = DummyClass.new(ocns: [], sudocs: [])
-    expect(rec.ec_handler.title).to eq('Default Mangler')
+    expect(rec.ec_mangler.title).to eq('Default Mangler')
   end
 
-  it 'gives us a particular handler if a series does match' do
+  it 'gives us a particular mangler if a series does match' do
     rec = DummyClass.new(ocns: [14_964_165], sudocs: [])
     expect(rec.series).to eq(['FCC Record'])
-    expect(rec.ec_handler.title).to eq('FCC Record')
+    expect(rec.ec_mangler.title).to eq('FCC Record')
     rec2 = DummyClass.new(ocns: [], sudocs: ['S 1.1:foobar'])
     expect(rec2.series).to eq(['Foreign Relations'])
-    expect(rec2.ec_handler.title).to eq('Foreign Relations')
+    expect(rec2.ec_mangler.title).to eq('Foreign Relations')
   end
 end
 
 describe 'parse_ec' do
   let(:dummy) { DummyClass.new(ocns: [], sudocs: []) }
   it 'parses "V. 8:NO. 6 (1993:MAR. 19)"' do
-    expect(dummy.ec_handler.title).to eq('Default Mangler')
+    expect(dummy.ec_mangler.title).to eq('Default Mangler')
     expect(dummy.parse_ec('V. 8:NO. 6 (1993:MAR. 19)')['month']).to eq('March')
   end
 
@@ -277,10 +277,10 @@ describe 'ECMangle.correct_year' do
   end
 end
 
-describe 'ECMangle.available_ec_handlers' do
-  it 'contains all of the ec_handlers' do
-    ECMangle.available_ec_handlers.each { |_t, h| puts h.title }
-    expect(ECMangle.available_ec_handlers.count).to eq(30)
+describe 'ECMangle.available_ec_manglers' do
+  it 'contains all of the ec_manglers' do
+    ECMangle.available_ec_manglers.each { |_t, h| puts h.title }
+    expect(ECMangle.available_ec_manglers.count).to eq(30)
   end
 end
 

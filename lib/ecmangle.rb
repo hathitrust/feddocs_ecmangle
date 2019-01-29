@@ -2,35 +2,36 @@
 
 require 'forwardable'
 require 'default_mangler'
+require 'yaml'
 # Methods common to EnumChron handling
 module ECMangle
   extend Forwardable
   class << self
-    attr_accessor :available_ec_handlers
-    attr_accessor :default_ec_handler
-    attr_accessor :ocn_handlers # {<ocn> : [<handlers>]}
-    attr_accessor :sudoc_handlers # {<sudoc> : [<handlers>]}
+    attr_accessor :available_ec_manglers
+    attr_accessor :default_ec_mangler
+    attr_accessor :ocn_manglers # {<ocn> : [<manglers>]}
+    attr_accessor :sudoc_manglers # {<sudoc> : [<manglers>]}
   end
-  def_delegators :ec_handler, :parse_ec, :explode, :canonicalize
+  def_delegators :ec_mangler, :parse_ec, :explode, :canonicalize
 
-  @ocn_handlers = Hash.new { |hash, key| hash[key] = [] }
-  @sudoc_handlers = Hash.new { |hash, key| hash[key] = [] }
-  @available_ec_handlers = {}
+  @ocn_manglers = Hash.new { |hash, key| hash[key] = [] }
+  @sudoc_manglers = Hash.new { |hash, key| hash[key] = [] }
+  @available_ec_manglers = {}
 
-  def self.register_handler(handler)
-    @available_ec_handlers[handler.title] = handler
-    handler.ocns.each { |o| @ocn_handlers[o] << handler }
-    handler.sudoc_stems.each { |s| @sudoc_handlers[s] << handler }
-    @default_ec_handler = handler if handler.sudoc_stems.none? && handler.ocns.none?
+  def self.register_mangler(mangler)
+    @available_ec_manglers[mangler.title] = mangler
+    mangler.ocns.each { |o| @ocn_manglers[o] << mangler }
+    mangler.sudoc_stems.each { |s| @sudoc_manglers[s] << mangler }
+    @default_ec_mangler = mangler if mangler.sudoc_stems.none? && mangler.ocns.none?
   end
 
-  def ec_handler
-    ECMangle.available_ec_handlers ||= ECMangle.get_available_ec_handlers
+  def ec_mangler
+    ECMangle.available_ec_manglers ||= ECMangle.get_available_ec_manglers
     @series ||= series
-    @ec_handler = if @series&.any?
-                    ECMangle.available_ec_handlers[@series.first]
+    @ec_mangler = if @series&.any?
+                    ECMangle.available_ec_manglers[@series.first]
                   else
-                    ECMangle.default_ec_handler
+                    ECMangle.default_ec_mangler
                   end
   end
 
@@ -126,16 +127,16 @@ module ECMangle
   end
 
   # Uses ocns and sudocs to identify a series title
-  # (and appropriate ultimately handler)
+  # (and appropriate ultimately mangler)
   def series
     @series ||= []
     record_ocns.each do |ocn|
-      @series << ECMangle.ocn_handlers[ocn.to_i].collect(&:title)
+      @series << ECMangle.ocn_manglers[ocn.to_i].collect(&:title)
     end
     record_sudocs.each do |sudoc|
-      ECMangle.sudoc_handlers.each do |stem, handlers|
+      ECMangle.sudoc_manglers.each do |stem, manglers|
         if /^#{::Regexp.escape(stem)}/.match?(sudoc)
-          @series << handlers.collect(&:title)
+          @series << manglers.collect(&:title)
         end
       end
     end
@@ -144,7 +145,14 @@ module ECMangle
     @series
   end
 
-  def self.get_available_ec_handlers
+  def self.load_manglers_from_configs
+    Dir[File.dirname(__FILE__) +
+        '/../config/mangler_definitions/*.yml'].each do |yml|
+      ECMangle::DefaultMangler.new(YAML.load_file(yml))
+    end
+  end
+
+  def self.load_custom_mangler_classes
     Dir[File.dirname(__FILE__) + '/custom_manglers/*.rb'].each { |file| require file }
     constants.each do |c|
       next unless (eval(c.to_s).class == Class) &&
@@ -152,7 +160,12 @@ module ECMangle
 
       eval(c.to_s).new
     end
-    ECMangle.default_ec_handler = ECMangle::DefaultMangler.new
   end
-  get_available_ec_handlers
+
+  def self.get_available_ec_manglers
+    ECMangle.load_manglers_from_configs
+    ECMangle.load_custom_mangler_classes
+    ECMangle.default_ec_mangler = ECMangle::DefaultMangler.new
+  end
+  get_available_ec_manglers
 end

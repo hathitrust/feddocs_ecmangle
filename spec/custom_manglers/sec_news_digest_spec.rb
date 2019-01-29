@@ -11,7 +11,7 @@ describe 'SECNewsDigest' do
   let(:digest) do
     DM.new(YAML.load_file(
              File.dirname(__FILE__) +
-             '/../../config/handler_definitions/sec_news_digest.yml'
+             '/../../config/mangler_definitions/sec_news_digest.yml'
            ))
   end
 

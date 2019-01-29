@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ECMangle
-  # Default mangler/handler of enumeration/chronology
+  # Default mangler of enumeration/chronology
   # All custom manglers inherit from DefaultMangler.
   class DefaultMangler
     attr_accessor :patterns
@@ -15,7 +15,7 @@ module ECMangle
       @title ||= (options['title'] || 'Default Mangler')
       @ocns ||= (options['ocns'] || [])
       @sudoc_stems ||= (options['sudoc_stems'] || [])
-      ECMangle.register_handler self
+      ECMangle.register_mangler self
       @tokens = {
         # divider
         div: '[\s:,;\/-]+\s?',
