@@ -69,6 +69,8 @@ module ECMangle
 
         /^#{@tokens[:y]}$/xi,
 
+        /^\((?<year>\d{4})\)$/xi,
+
         /^#{@tokens[:b]}$/xi,
 
         /^#{@tokens[:sh]}$/xi,

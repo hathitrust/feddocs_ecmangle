@@ -76,6 +76,11 @@ describe 'parse_ec' do
 
   it 'parses V. 127(1954)' do
     parsed = DM.new.parse_ec('V. 127(1954)')
+    expect(parsed['volume']).to eq('127')
+  end
+
+  it 'parses (1984)' do
+    expect(DM.new.parse_ec('(1984)')['year']).to eq('1984')
   end
 end
 
