@@ -1,0 +1,6 @@
+title: Nautical Almanac
+ocns: [1286390,590966108,609507858]
+patterns:
+  - /^\((?<year>\d{4})\)$/
+  - /^(?<year>\d{4})\+INDEX$/
+  - /^(?<start_year>\d{4})-(?<end_year>\d{2})$/
