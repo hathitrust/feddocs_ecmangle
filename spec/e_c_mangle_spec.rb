@@ -29,6 +29,7 @@ end
 describe 'preprocess' do
   it 'removes copy information' do
     expect(ECMangle.preprocess('C. 1 V. 5 1990 PP. 4783-5463')).to eq('V. 5 1990 PP. 4783-5463')
+    expect(ECMangle.preprocess('V. 10 (1983) (C. 1)')).to eq('V. 10 (1983)')
   end
 end
 
@@ -280,7 +281,7 @@ end
 describe 'ECMangle.available_ec_manglers' do
   it 'contains all of the ec_manglers' do
     ECMangle.available_ec_manglers.each { |_t, h| puts h.title }
-    expect(ECMangle.available_ec_manglers.count).to eq(31)
+    expect(ECMangle.available_ec_manglers.count).to eq(32)
   end
 end
 

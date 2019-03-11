@@ -1,0 +1,8 @@
+title: Handbook of North American Indians 
+ocns: [13240086, 568690282, 622355838, 670012899, 679862056]
+patterns:
+  - /^#{tokens[:v]}#{tokens[:div]}\(#{tokens[:y]}\)$/
+  - /^(?<volume>\d\d)(\/#{tokens[:pt]})?$/
+  - /^#{tokens[:v]}:(?<part>\d)(\s\(\d{4}\))?$/
+  - /^#{tokens[:v]}:#{tokens[:pt]}(\s\(\d{4}\))?$/
+  - /^#{tokens[:v]}\s[A-Z\s\-]+$/

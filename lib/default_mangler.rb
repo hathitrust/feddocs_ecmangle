@@ -267,7 +267,7 @@ module ECMangle
       # fix 3 digit years, this is more restrictive than most series specific
       # work.
       ec_string = '1' + ec_string if ec_string.match?(/^9\d\d$/)
-      ec_string.sub(/^C\. [1-2] /, '').sub(/\(\s/, '(').sub(/\s\)/, ')')
+      ec_string.sub(/^C\. [1-2] /, '').sub(/\(\s/, '(').sub(/\s\)/, ')').sub(/ \(C\. [1-2]\)$/, '')
     end
 
     # Use the tokens and patterns to perform feature extraction
