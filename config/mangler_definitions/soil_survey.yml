@@ -1,0 +1,37 @@
+title: Soil Survey 
+ocns: [ 1585684, 590153105, 590191863, 590599520, 590940860, 591062264, 591274730, 591951818, 592355804, 592569569, 592610030, 592634798, 592717915, 604102875, 606204946 ]
+patterns:
+  - '%r{^
+    (State:(?<state>[A-Z]+))?(,\s)?
+    (Area:(?<area>[A-Z\s\.,-]+))?(,\s)?
+    (Area\sPart:(?<area_part>[A-Z]+))?(,\s)?
+    (Part:(?<part>\d))?(,\s)?
+    (Volume:(?<volume>\d))?(,\s)?
+    (Year:(?<year>\d{4}))?(,\s)?
+    (Number:(?<number>\d{1,3}))?(,\s)?
+    (Start Number:(?<start_number>\d{1,3}))?(,\s)?
+    (End Number:(?<end_number>\d{1,3}))?
+    $}xi'
+  - /^(?<year>\d{4}):(?<number>\d{1,2})$/
+  - '%r{^((?<year>\d{4})[:,])?
+    (NO.\s)?(?<start_number>\d{1,3})-(?<end_number>\d{1,3})
+    (\sC\.\s\d)?$}xi'
+  - /^(?<year>\d{4})\s?NO(\.\s)?(?<number>\d{1,3})\s\d{4}$/
+  - '%r{^(?<year>\d{4})\s?NO(\.\s)?(?<start_number>\d{1,3})
+    -(?<end_number>\d{1,3})
+    (\s\d{4})?$}xi'
+  - /^(?<year>\d{4})#{@tokens[:div]}#{@tokens[:n]}$/
+  - '%r{^(?<state>[A-Z]{2}):\s
+    (?<area>[A-Z\s\.,-]+)\s(CO(UNTY|[\.,]?)|PARISH|AREA)(\sAREA)?
+    ([\.,])?
+    (\s(,\s)?\(?(?<area_part>[A-Z]+)\sPART\)?)?
+    (\s(?<year>\d{4}))?
+    (#{@tokens[:div]})?
+    (\sPR?T\.?\s(?<part>\d))?
+    (\sV\.?\s(?<volume>\d))?$}xi'
+  - '%r{^(?<year>\d{4})#{@tokens[:div]}
+      (?<number>\d{1,3})\s
+      \(?(?<area>[A-Z\s\.-]+)\s(CO\.\s?|PARISH)[\.,]\s(?<state>[A-Z]{2})\)$}xi'
+  - /^(?<state>[A-Z]{2}):\s(?<area>[A-Z\s]+)$/
+  - /^(?<year>\d{4}):(?<number>\d{1,3})(\sC\.\s\d)?$/
+t_order: [ state, area, area_part, part, volume, year, number, start_number, end_number ]
