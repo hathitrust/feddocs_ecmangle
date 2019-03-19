@@ -25,7 +25,7 @@ describe 'SECNewsDigest' do
         ec = digest.parse_ec(line)
         if ec.nil? || ec.empty?
           misses += 1
-          puts 'no match: ' + line
+          # puts 'no match: ' + line
         else
           # puts "match: "+line
           # puts "year: "+ec['year'] if ec['year']

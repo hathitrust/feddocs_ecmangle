@@ -15,6 +15,8 @@ module ECMangle
       @title ||= (options['title'] || 'Default Mangler')
       @ocns ||= (options['ocns'] || [])
       @sudoc_stems ||= (options['sudoc_stems'] || [])
+      @t_order ||= (options['t_order'] || nil)
+
       ECMangle.register_mangler self
       @tokens = {
         # divider

@@ -7,3 +7,4 @@ patterns:
   - /plain text/
   - /^not\s#{@tokens[:y]}$/ix
   - /^not\s#{@tokens[:dummy_token]}$/
+t_order: [year, volume]

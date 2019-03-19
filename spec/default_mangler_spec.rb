@@ -49,6 +49,10 @@ describe 'initialize' do
     expect(bulletin.patterns).to include(/^not\s#{bulletin.tokens[:y]}$/ix)
     expect(bulletin.patterns).to include(/^not\sdummy$/)
   end
+
+  it 'takes canonical order from YAML' do
+    expect(bulletin.t_order[1]).to eq('volume')
+  end
 end
 
 describe 'tokens' do
