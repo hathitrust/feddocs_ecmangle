@@ -258,6 +258,7 @@ module ECMangle
           ((?<end_month>#{@tokens[:m]})#{@tokens[:div]})?
           (?<end_day>\d{1,2})
         }xi
+
       ]
       if options['patterns']
         @patterns.concat(options['patterns'].map { |p| Regexp.new(eval(p)) })
@@ -287,8 +288,11 @@ module ECMangle
       # some cleanup
       unless matchdata.nil?
         ec = matchdata.named_captures
-        # Fix months
+        # Fix months and years
         ec = ECMangle.fix_months(ec)
+        if /^\d\d\d?$/.match?(ec['end_year'])
+          ec['end_year'] = ECMangle.calc_end_year(ec['start_year'], ec['end_year'])
+        end
 
         # Remove nils
         ec.delete_if { |_k, value| value.nil? }

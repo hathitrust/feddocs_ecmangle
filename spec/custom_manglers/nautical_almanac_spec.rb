@@ -49,7 +49,7 @@ describe 'NauticalAlmanac' do
     end
 
     it 'parses "1948-49"' do
-      expect(almanac.parse_ec('1948-49')['end_year']).to eq('49')
+      expect(almanac.parse_ec('1948-49')['end_year']).to eq('1949')
     end
   end
 
