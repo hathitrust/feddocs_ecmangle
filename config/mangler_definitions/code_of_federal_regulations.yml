@@ -1,0 +1,81 @@
+title: Code of Federal Regulations 
+ocns: [ 2786662, 3764087, 797215252 ]
+patterns:
+  - '%r{^
+(Title:(?<title>[^,]+))?
+((,\s)?Chapter:(?<chapter>[^,]+))?
+((,\s)?Start\sChapter:(?<chapter>[^,]+))?
+((,\s)?End\sChapter:(?<chapter>[^,]+))?
+((,\s)?Part:(?<part>[^,]+))?
+((,\s)?Start\sPart:(?<start_part>[^,]+))?
+((,\s)?End\sPart:(?<end_part>[^,]+))?
+((,\s)?Section:(?<section>[^,]+))?
+((,\s)?Year:(?<year>[^,]+))?
+    $}xi'
+  - '%r{^((?<year>\d{4})\s)?
+    (\(?(T(ITLE|\.)|NO\.)\)?\s?)?(?<title>\d{1,2}A?(-\d{1,2})?)
+    (\sPT\.\s(?<part>\d{1,4}))?
+    (\s(?<year>\d{4}))?
+    (#{@tokens[:div]}(PTS?\.\s)?
+      (?<start_part>\d{1,4})
+     [-\/](?<end_part>(END|\d{1,4})))?
+    (\s\(?(?<year>\d{4})\)?)?
+    (\sPT\.\s(?<part>\d{1,4}))?
+    $}xi'
+  - '%r{^(?<year>\d{4})
+      \sT\.\s(?<title>\d{1,2})
+      \s(?<start_part>\d{1,4})
+      -(?<end_part>\d{1,4})
+      (\s\k<year>)?
+    $}xi'
+  - '%r{^((?<year>\d{4})\s)?
+    (T(ITLE|\.)\s?)?(?<title>\d{1,2})
+      (\s(?<year>\d{4}))?
+      ((:|\s)CH(AP)?\.\s(?<chapter>\d{1,3})|
+      (:|\s)CH(AP)?\.\s(?<start_chapter>\d{1,3})
+       [-\/](?<end_chapter>(END|\d{1,3})))
+      (\s(?<year>\d{4}))?
+      ((\s|:)PT\.\s(?<start_part>\d{1,4})[-\/]
+      (?<end_part>(END|\d{1,4})))?
+      (\s\(?(?<year>\d{4})\)?)?
+    $}xi'
+  - '%r{^((?<year>\d{4})\s)?
+    \(?T(ITLE|\.)\)?\s(?<title>\d{1,2})
+     :(?<part>\d{1,4})
+     \s(?<year>\d{4})
+    $}xi'
+  - '%r{^((?<year>\d{4})\s)?
+    T(ITLE|\.)\s?(?<title>\d{1,2})
+    (\s(?<year>\d{4}))?
+    \s(PT\.\s)?(?<part>\d)?
+    \s?(\(|\s)?(SEC\.\s)?(?<section>\d{1,2}\.\s\d{1,4}-\d{1,2}\.\s\d{1,4})\)?
+    (\s(?<year>\d{4}))?
+    $}xi'
+  - '%r{^(T(ITLE|\.)\s?)?(?<title>\d{1,2})
+      (\s\(?(?<year>\d{4})\)?)?
+     (:|\s)PT\.\s(?<part>\d{1,2})
+     (:|\s)\(?SECT?\.\s(?<section>\d{1,2}\.\s\d{1,4}[-\/]
+      (END|\d{1,2}\.\s\d{1,4}))\)?
+      (\s\(?(?<year>\d{4})\)?)?
+    $}xi'
+  - '%r{^(?<year>\d{4})\s
+      T\.\s(?<title>\d{1,2})
+      (\s(?<start_part>\d{1,3})-
+        (?<end_part>(END|\d{1,3})))?
+      (\s\k<year>)?
+    $}xi'
+  - '%r{^(T(ITLE|\.)\s?)(?<title>\d{1,2})
+     #{@tokens[:div]}
+     #{@tokens[:pt]}
+     #{@tokens[:div]}
+     SEC.\s(?<section>\d{1,4}[-\/](END|\d{1,4}))
+     (\s(?<year>\d{4}))?
+    $}xi'
+  - '%r{^(?<year>\d{4})\s
+       T\.\s(?<title>\d{1,2})
+       \s\((?<start_part>\d{1,4})-
+       (?<end_part>(\d{1,4}|END))\)
+       \s\k<year>
+     $}xi'
+
+t_order: [ title, chapter, start_chapter, end_chapter, part, start_part, end_part, section, year ]
