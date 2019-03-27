@@ -32,7 +32,7 @@ describe 'FederalRegulations' do
           # puts fr.canonicalize(ec)
           res = fr.explode(ec)
           res.each do |canon, _features|
-            #puts canon
+            # puts canon
           end
           matches += 1
         end

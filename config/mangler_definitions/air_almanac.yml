@@ -1,0 +1,55 @@
+title: Air Almanac 
+ocns: [ 2257061, 60661388, 591123682, 610060051]
+tokens: 
+  :m: '(MONTH:)?(?<month>(JAN?(UARY)?|FEB(RUARY)?|MAR(CH)?|APR?(IL)?|MA?Y|JUNE?|JE|JULY?|JY|AU?G(UST)?|SE?P?T?(EMBER)?|OCT(OBER)?|NOV(EMBER)?|DE?C?(EMBER)?)\.?)'
+
+
+patterns:
+  - '%r{^
+    (Year:(?<year>[^,]+))?
+    ((,\s)?Month:(?<month>[^,]+))?
+    ((,\s)?Start\sMonth:(?<start_month>[^,]+))?
+    ((,\s)?End\sMonth:(?<end_month>[^,]+))?
+    ((,\s)?Number:(?<number>[^,]+))?
+    ((,\s)?Volume:(?<volume>[^,]+))?
+    ((,\s)?Start\sNumber:(?<start_number>[^,]+))?
+    ((,\s)?End\s Number:(?<end_number>[^,]+))?
+    ((,\s)?Supplement:(?<supplement>[^,]+))?
+    $}xi'
+  - '%r{^
+    (?<start_month>#{@tokens[:m]})#{@tokens[:div]}
+    (?<end_month>#{@tokens[:m]})
+    \s?\(?(?<year>\d{4})\)?
+    $}xi'
+  - '%r{^#{@tokens[:y]}:
+    #{@tokens[:v]}
+    (\sC\.\s1)?
+    $}xi'
+  - '%r{^#{@tokens[:y]}
+    \s#{@tokens[:ns]}
+    $}xi'
+  - '%r{^#{@tokens[:y]}
+    \s\k<year>
+    $}xi'
+  - '%r{^#{@tokens[:y]}(#{@tokens[:div]})?
+    (?<start_month>#{@tokens[:m]})\s?#{@tokens[:div]}
+    (?<end_month>#{@tokens[:m]})
+    (\s\k<year>)?
+    (\s=\s?\d{3}(#{@tokens[:div]}(?<number>\d))?)?
+    $}xi'
+  - '%r{^#{@tokens[:y]}\s
+    #{@tokens[:n]}
+    $}xi'
+  - '%r{^(?<year>\d{3,4})#{@tokens[:div]}
+    (?<number>\d)
+    $}xi'
+  - '%r{^#{@tokens[:y]}
+    (\sC\.\s1)?
+    (#{@tokens[:div]}CD)?
+    $}xi'
+  - '%r{^#{@tokens[:y]}
+    (#{@tokens[:div]})?
+    #{@tokens[:sup]}
+    (\s\k<year>)?
+    $}xi'
+t_order: [year, month, start_month, end_month, number, volume, start_number, end_number, supplement]

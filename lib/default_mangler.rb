@@ -294,6 +294,8 @@ module ECMangle
           ec['end_year'] = ECMangle.calc_end_year(ec['start_year'], ec['end_year'])
         end
 
+        ec['year'] = ECMangle.correct_year(ec['year']) if ec['year']
+
         # Remove nils
         ec.delete_if { |_k, value| value.nil? }
 
