@@ -1,0 +1,135 @@
+title: Official gazette of the United States Patent Office
+ocns: [1768634, 606935517, 9822127]
+tokens: 
+  :m: '(MONTH:)?(?<month>(JAN?(UARY)?|FEB?(RUARY)?|MA?R(CH)?|APR?(IL)?|MA?Y|JUNE?|JE|JULY?|JY|JL|AU?G(UST)?|SE?P?T?(EMBER)?|OCT?(OBER)?|NOV?(EMBER)?|DE?C?(EMBER)?)\.?)'
+patterns:
+  - '%r{^
+(Volume:(?<volume>[^,]+))?
+((,\s)?Part:(?<part>[^,]+))?
+((,\s)?Number:(?<number>[^,]+))?
+((,\s)?Start\sNumber:(?<start_number>[^,]+))?
+((,\s)?End\sNumber:(?<end_number>[^,]+))?
+((,\s)?Year:(?<year>[^,]+))?
+((,\s)?Month:(?<month>[^,]+))?
+((,\s)?Day:(?<day>[^,]+))?
+((,\s)?Start\sMonth:(?<start_month>[^,]+))?
+((,\s)?Start\sDay:(?<start_day>[^,]+))?
+((,\s)?End\sMonth:(?<end_month>[^,]+))?
+((,\s)?End\sDay:(?<end_day>[^,]+))?
+((,\s)?Numbers:(?<numbers>.+))?
+    $}xi'
+  - '%r{^
+    #{@tokens[:v]}#{@tokens[:div]}
+    (#{@tokens[:pt]}#{@tokens[:div]})?
+    (#{@tokens[:m]}#{@tokens[:div]})?
+    \(?#{@tokens[:y]}\)?
+    $}xi'
+  - '%r{^
+    #{@tokens[:v]}#{@tokens[:div]}
+    (#{@tokens[:pt]}#{@tokens[:div]})?
+    (NOS?\.\s(?<start_number>\d)-(?<end_number>\d)#{@tokens[:div]})?
+    #{@tokens[:y]}#{@tokens[:div]}
+    #{@tokens[:m]}
+    $}xi'
+  - '%r{^
+    #{@tokens[:v]}
+    (:#{@tokens[:pt]})?
+    \s?\(
+    #{@tokens[:y]}#{@tokens[:div]}
+    #{@tokens[:m]}\s?\)
+    $}xi'
+  - '%r{^
+     V\.\s(?<volume>\d{3})(?<year>\d{4})
+     :#{@tokens[:m]}
+    $}xi'
+  - '%r{^
+    V\.\s(?<start_volume>\d{3})-(?<end_volume>\d{3})(?<year>\d{4})
+    #{@tokens[:div]}(?<start_month>#{@tokens[:m]})
+    (\s(?<start_day>[0-3]?[0-9]))?
+    #{@tokens[:div]}(?<end_month>#{@tokens[:m]})
+    (\s(?<end_day>[0-3]?[0-9]))?
+    $}xi'
+  - '%r{^
+    #{@tokens[:v]}#{@tokens[:div]}
+    (?<start_month>#{@tokens[:m]})#{@tokens[:div]}
+    (?<end_month>#{@tokens[:m]})
+    #{@tokens[:div]}
+    #{@tokens[:y]}
+    $}xi'
+  - '%r{^
+    #{@tokens[:v]}
+    \s?\(
+    #{@tokens[:y]}#{@tokens[:div]}
+    #{@tokens[:m]}\s?
+    (?<start_day>[0-3]?[0-9])-(?<end_day>[0-3]?[0-9])
+    \)
+   $}xi'
+  - '%r{^V\.\s(?<start_volume>\d{1,3})-
+    (?<end_volume>\d{1,3})\s
+    ((?<start_month>#{@tokens[:m]})-
+    (?<end_month>#{@tokens[:m]})\s)?
+    #{@tokens[:y]}
+    $}xi'
+  - '%r{^(?<numbers>
+    (\d,)?\d{3},\d{3}-(\d,)?\d{3},\d{3})
+    \(#{@tokens[:y]}
+    (:#{@tokens[:m]}\s?)?
+    \)
+    $}xi'
+  - '%r{^(?<numbers>
+    (\d,)?\d{3},\d{3}-(\d,)?\d{3},\d{3})
+    \(#{@tokens[:y]}
+    :(?<start_month>#{@tokens[:m]})\s(?<start_day>[0-3]?[0-9])-
+    (?<end_month>#{@tokens[:m]})\s(?<end_day>[0-3]?[0-9])
+    \)
+    $}xi'
+  - '%r{^#{@tokens[:v]}#{@tokens[:div]}
+    NOS?\.\s(?<start_number>\d)-(?<end_number>\d)
+    (?<year>\d{4})#{@tokens[:div]}
+    #{@tokens[:m]}\s
+    (?<start_day>[0-3]?[0-9])-(?<end_day>[0-3]?[0-9])
+    $}xi'
+  - '%r{^#{@tokens[:v]}#{@tokens[:div]}
+    NO\.\s(?<start_number>\d{1,2})-(?<end_number>\d{1,2})\s
+    #{@tokens[:y]}#{@tokens[:div]}
+    (?<start_month>#{@tokens[:m]})\s
+    (?<start_day>[0-3]?[0-9])-\s?
+    (?<end_month>#{@tokens[:m]})\s(?<end_day>[0-3]?[0-9])\s
+    (\k<year>\s)?
+    (?<numbers>(\d,)?\d{3},\d{3}-(\d,)?\d{3},\d{3})
+    $}xi'
+  - '%r{^#{@tokens[:v]}#{@tokens[:div]}
+    NO\.\s(?<start_number>\d{1,2})-(?<end_number>\d{1,2})\s
+    #{@tokens[:y]}#{@tokens[:div]}
+    #{@tokens[:m]}#{@tokens[:div]}
+    (\k<year>#{@tokens[:div]})?
+    (?<numbers>(\d,)?\d{3},\d{3}-(\d,)?\d{3},\d{3})
+    $}xi'
+  - '%r{^#{@tokens[:v]}#{@tokens[:div]}
+    (?<part>\d)\s
+    \(#{@tokens[:y]}#{@tokens[:div]}
+    #{@tokens[:m]}\)
+    $}xi'
+  - '%r{^#{@tokens[:v]}
+    (#{@tokens[:div]}(?<part>\d))?\s?
+    \(?#{@tokens[:y]}#{@tokens[:div]}
+    (?<start_month>#{@tokens[:m]})#{@tokens[:div]}(?<end_month>#{@tokens[:m]})\)?
+    $}xi'
+  - '%r{^
+    #{@tokens[:v]}#{@tokens[:div]}
+    #{@tokens[:y]}#{@tokens[:div]}
+    MO\.\s#{@tokens[:m]}#{@tokens[:div]}
+    NO\.\s(?<numbers>[0-9]+-[0-9]+)
+    $}xi'
+  - '%r{^
+    #{@tokens[:v]}#{@tokens[:div]}
+    NO\.\s(?<start_number>\d{1,2})-(?<end_number>\d{1,2})#{@tokens[:div]}
+    #{@tokens[:m]}#{@tokens[:div]}
+    #{@tokens[:y]}
+    $}xi'
+  - '%r{^
+    #{@tokens[:v]}#{@tokens[:div]}
+    (?<part>(1|2))#{@tokens[:div]}
+    #{@tokens[:y]}
+    #$}xi'
+t_order: [volume, part, number, start_number, end_number, year, month, day, start_month, start_day, end_month, end_day, numbers]

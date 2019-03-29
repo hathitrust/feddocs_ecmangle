@@ -281,7 +281,7 @@ end
 describe 'ECMangle.available_ec_manglers' do
   it 'contains all of the ec_manglers' do
     ECMangle.available_ec_manglers.each { |_t, h| puts h.title }
-    expect(ECMangle.available_ec_manglers.count).to eq(36)
+    expect(ECMangle.available_ec_manglers.count).to eq(37)
   end
 end
 

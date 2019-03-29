@@ -4,8 +4,8 @@ patterns:
   - '%r{^
 (Title:(?<title>[^,]+))?
 ((,\s)?Chapter:(?<chapter>[^,]+))?
-((,\s)?Start\sChapter:(?<chapter>[^,]+))?
-((,\s)?End\sChapter:(?<chapter>[^,]+))?
+((,\s)?Start\sChapter:(?<start_chapter>[^,]+))?
+((,\s)?End\sChapter:(?<end_chapter>[^,]+))?
 ((,\s)?Part:(?<part>[^,]+))?
 ((,\s)?Start\sPart:(?<start_part>[^,]+))?
 ((,\s)?End\sPart:(?<end_part>[^,]+))?
