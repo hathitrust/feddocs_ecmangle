@@ -88,6 +88,10 @@ module ECMangle
 
         /^#{@tokens[:y]}#{@tokens[:div]}#{@tokens[:v]}$/xi,
 
+        /^#{@tokens[:y]}#{@tokens[:div]}#{@tokens[:n]}$/xi,
+
+        /^#{@tokens[:y]}#{@tokens[:div]}#{@tokens[:ns]}$/xi,
+
         # 1988:MAY 17
         %r{
           ^#{@tokens[:y]}#{@tokens[:div]}
@@ -100,6 +104,13 @@ module ECMangle
         /^#{@tokens[:v]}[\(\s]\s?#{@tokens[:y]}\)?$/xi,
 
         /^#{@tokens[:v]}#{@tokens[:div]}#{@tokens[:n]}$/xi,
+
+        # Year:1977, Volume:50, Number:50
+        %r{
+          ^#{@tokens[:y]}#{@tokens[:div]}
+          #{@tokens[:v]}#{@tokens[:div]}
+          #{@tokens[:n]}#
+        }xi,
 
         # NO. 42 (2005:APR. 13)
         %r{

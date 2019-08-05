@@ -31,7 +31,7 @@ describe 'CalendarOfBusiness' do
       end
       puts "Calendar of Business match: #{matches}"
       puts "Calendar of Business no match: #{misses}"
-      expect(matches).to eq(3024) # actual: 3084
+      expect(matches).to eq(3029) # actual: 3084
     end
   end
 

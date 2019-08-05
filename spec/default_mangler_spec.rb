@@ -86,6 +86,14 @@ describe 'parse_ec' do
   it 'parses (1984)' do
     expect(DM.new.parse_ec('(1984)')['year']).to eq('1984')
   end
+
+  it 'parses "Year:1977, Volume:50, Number:23"' do
+    expect(DM.new.parse_ec('Year:1977, Volume:50, Number:23')['number']).to eq('23')
+  end
+
+  it 'parses "1993:NO. 1"' do
+    expect(DM.new.parse_ec('1993:NO. 1')['year']).to eq('1993')
+  end
 end
 
 describe 'register_mangler' do

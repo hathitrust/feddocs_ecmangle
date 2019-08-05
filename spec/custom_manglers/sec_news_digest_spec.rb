@@ -41,7 +41,7 @@ describe 'SECNewsDigest' do
       puts "SEC News Digest no match: #{misses}"
       # actual number in test file is 5476
       # expect(matches).to eq(matches+misses)
-      expect(matches).to eq(5372)
+      expect(matches).to eq(5375)
     end
 
     it 'parses Number:130' do

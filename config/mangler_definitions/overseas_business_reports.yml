@@ -1,0 +1,16 @@
+title: Overseas Business Reports 
+ocns: [ 1792851, 557642861 ]
+patterns:
+  - '%r{^#{@tokens[:y]}#{@tokens[:div]}
+         (?<start_number>\d{1,3})-(?<end_number>\d{1,3})
+     $}xi'
+  - '%r{^#{@tokens[:y]}#{@tokens[:div]}
+         (?<number>\d{1,3})
+    $}xi'
+  - '%r{^#{@tokens[:y]}
+          NO(?<start_number>\d{1,3})-(?<end_number>\d{1,3})
+    $}xi'
+  - '%r{^#{tokens[:ns]}#{@tokens[:div]}
+    #{@tokens[:y]}
+    #}xi'
+t_order: [year, number, start_number, end_number]

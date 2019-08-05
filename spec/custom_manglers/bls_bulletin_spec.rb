@@ -32,7 +32,7 @@ describe 'Bulletin' do
       puts "BLS Bulletin match: #{matches}"
       puts "BLS Bulletin no match: #{misses}"
       # actual number in test file is 7074
-      expect(matches).to eq(6534)
+      expect(matches).to eq(6535)
       # expect(matches).to eq(matches+misses)
     end
 
