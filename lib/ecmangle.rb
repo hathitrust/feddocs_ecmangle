@@ -77,7 +77,7 @@ module ECMangle
   # a lot of terrible abbreviations for months
   MONTHS = %w[January February March April May
               June July August September October
-              November December].freeze
+              November December Annual].freeze
   def self.lookup_month(mon)
     m_abbrev = mon.chomp('.')
     MONTHS.each do |month|

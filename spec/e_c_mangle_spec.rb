@@ -250,7 +250,7 @@ describe 'ECMangle.lookup_month' do
   it 'returns "April" for "4" and "04"' do
     expect(ECMangle.lookup_month('4')).to eq('April')
     expect(ECMangle.lookup_month('04')).to eq('April')
-    expect(ECMangle.lookup_month('13')).to be_nil
+    expect(ECMangle.lookup_month('13')).to eq('Annual')
   end
 
   it 'returns "January" for "JA"' do
@@ -281,7 +281,7 @@ end
 describe 'ECMangle.available_ec_manglers' do
   it 'contains all of the ec_manglers' do
     ECMangle.available_ec_manglers.each { |_t, h| puts h.title }
-    expect(ECMangle.available_ec_manglers.count).to eq(38)
+    expect(ECMangle.available_ec_manglers.count).to eq(39)
   end
 end
 
