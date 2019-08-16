@@ -1,0 +1,60 @@
+title: United States Exports of Domestic and Foreign Merchandise 
+ocns: [ 7592910, 557737451 ]
+tokens:
+  :sec: 'SECT?\.\s(?<section>[0-9A-Z]{1,2})'
+  :sud: '3\.\s164:410/'
+patterns:
+  - '%r{^#{@tokens[:sec]}\s?
+    \(?#{@tokens[:y]}#{@tokens[:div]}
+    #{@tokens[:m]}\s?\)?
+    $}xi'
+  - '%r{^#{@tokens[:y]}#{@tokens[:div]}
+    PT\.\s(?<part>\d\s[A-B])
+    $}xi'
+  - '%r{^PT\.\s(?<part>(I|L){1,3})\s
+    (?<year>\d{4})(#{@tokens[:div]}
+    #{@tokens[:m]})?
+    $}xi'
+  - '%r{^#{@tokens[:y]}\sC\.\s1
+    $}xi'
+  - '%r{^#{@tokens[:sud]}
+    (#{@tokens[:sec]}|#{@tokens[:pt]})#{@tokens[:div]}
+    (#{@tokens[:m]}\s)?#{@tokens[:y]}
+    $}xi'
+  - '%r{^#{@tokens[:sud]}
+    ((#{@tokens[:sec]}|#{@tokens[:pt]})#{@tokens[:div]})?
+    (?<year>9\d\d)-(?<month>(1[0-3]|[1-9]))
+    $}xi'
+  - '%r{^#{@tokens[:y]}#{@tokens[:div]}
+    #{@tokens[:pt]}#{@tokens[:div]}
+    (?<start_month>(1[0-3]|[1-9]))-(?<end_month>(1[0-3]|[1-9]))
+    $}xi'
+  - '%r{PT\.\s(?<start_part>\d)
+    \(#{@tokens[:y]}#{@tokens[:div]}
+    (?<start_month>#{@tokens[:m]})\s?\)-
+    PT\.\s(?<end_part>\d)
+    \(#{@tokens[:y]}#{@tokens[:div]}
+    (?<end_month>#{@tokens[:m]})\s?\)
+    $}xi'
+  - '%r{^#{@tokens[:y]}\s
+    (?<start_month>#{@tokens[:m]})-(?<end_month>#{@tokens[:m]})\s
+    #{@tokens[:pt]}
+    $}xi'
+  - '%r{^(?<year>\d{4})
+    \((?<section>[A-Z]{1,2})\)
+    $}xi'
+  - '%r{^(?<year>\d{4})
+    \(#{@tokens[:pt]}\)
+    $}xi'
+  - '%r{^(?<year>\d{3})-(?<month>(1[0-3]|[1-9]))
+    (#{@tokens[:div]}#{@tokens[:pt]})?
+    $}xi'
+  - '%r{^(?<year>\d{4}):#{@tokens[:m]}
+    (\s-\d{4})?
+    $}xi'
+  - '%r{^PT\.\s(((?<start_part>1)-(?<end_part>2))|(?<part>[1-2]))
+    \((?<year>\d{4})#{@tokens[:div]}
+    (?<month>[A-Z]{3,10})\.?\s?\)
+    $}xi'
+
+
